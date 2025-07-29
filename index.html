@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mudibonus</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="/static/mudibonus-logo.png" />
+    <script src="/static/main.js" defer></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: url('/static/background.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header, .footer {
+            background-color: rgba(45, 0, 0, 0.85);
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .header .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .logo-image {
+            max-width: 150px;
+            height: auto;
+            filter: drop-shadow(0 0 5px #ff4c4c);
+            margin-top: 10px;
+        }
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .casino-card {
+            background: linear-gradient(180deg, #330000cc 0%, #1a0000cc 100%);
+            border: 1px solid #ff4c4c;
+            border-radius: 20px;
+            box-shadow: 0 0 20px #ff4c4c33;
+            padding: 60px;
+            margin: 60px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+        }
+        .casino-logo img {
+            max-height: 80px;
+        }
+        .casino-name {
+            font-size: 1.8em;
+            color: #ff4c4c;
+            margin-top: 10px;
+        }
+        .bonus-amount {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #ff4c4c;
+            margin: 10px 0;
+        }
+        .bonus-description {
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        .features {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+        .features li {
+            padding: 8px 0;
+            border-bottom: 1px solid #4d0000;
+        }
+        .features li::before {
+            content: '\2713';
+            color: #ff9999;
+            margin-right: 10px;
+        }
+        .casino-button {
+            background: #ff4c4c;
+            color: #000;
+            font-weight: bold;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 30px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background 0.3s ease;
+        }
+        .casino-button:hover {
+            background: #cc0000;
+            color: #fff;
+        }
+        .footer-title {
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        .contact-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .contact-item {
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+        }
+        .contact-icon {
+            font-size: 1.5em;
+        }
+        .contact-label {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.9em;
+        }
+        .modal-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        .modal {
+            background: #2d0000;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 10px #ff4c4c;
+        }
+        .modal h2 {
+            color: #ff4c4c;
+            margin-bottom: 15px;
+        }
+        .modal button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn-continue {
+            background: #ff9999;
+        }
+        .btn-leave {
+            background: #cc0000;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="ageModal" class="modal-bg">
+        <div class="modal">
+            <h2>Altersprüfung</h2>
+            <p>Diese Seite ist nur für Personen ab 18 Jahren zugänglich.</p>
+            <p>Spielen kann süchtig machen. Bitte verantwortungsvoll spielen.</p>
+            <button class="btn-continue" onclick="enterSite()">Ich bin 18+</button>
+            <button class="btn-leave" onclick="leaveSite()">Verlassen</button>
+        </div>
+    </div>
+
+    <div id="mainContent" style="display:none; flex: 1; display: flex; flex-direction: column;">
+        <header class="header">
+            <div class="container">
+                <img src="/static/mudibonus-logo.png" alt="Mudibonus Logo" class="logo-image">
+            </div>
+        </header>
+
+        <main class="container">
+            <div class="casino-card">
+                <div class="casino-logo">
+                    <img src="https://www.letslucky.com/images/logo--horizontal.svg?hash=3d5fa4c33ad0be3ab17ec1fa4c7bd0be" alt="Let's Lucky Logo">
+                </div>
+                <h3 class="casino-name">LET'S LUCKY</h3>
+                <div class="bonus-amount">500€</div>
+                <div class="bonus-description">100% + 100 Freispiele</div>
+                <ul class="features">
+                    <li>Exklusive VIP Programme</li>
+                    <li>Live Dealer Spiele</li>
+                    <li>Kryptowährungen akzeptiert</li>
+                    <li>Wöchentliche Aktionen</li>
+                    <li>Deutsche Benutzeroberfläche</li>
+                </ul>
+                <a href="https://letslucky.info/k966e2140" class="casino-button" target="_blank" rel="noopener noreferrer">BONUS AKTIVIEREN</a>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <h3 class="footer-title">Kontakt</h3>
+                <div class="contact-icons">
+                    <a href="mailto:example@example.com" class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                        <span class="contact-label">Email</span>
+                    </a>
+                    <a href="https://t.me/example" class="contact-item" target="_blank">
+                        <div class="contact-icon"><i class="fab fa-telegram-plane"></i></div>
+                        <span class="contact-label">Telegram</span>
+                    </a>
+                    <a href="https://twitch.tv/example" class="contact-item" target="_blank">
+                        <div class="contact-icon"><i class="fab fa-twitch"></i></div>
+                        <span class="contact-label">Twitch</span>
+                    </a>
+                    <a href="https://discord.gg/example" class="contact-item" target="_blank">
+                        <div class="contact-icon"><i class="fab fa-discord"></i></div>
+                        <span class="contact-label">Discord</span>
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
